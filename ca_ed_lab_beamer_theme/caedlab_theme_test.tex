@@ -1,0 +1,54 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{setspace}
+\usetheme{caedlab}
+
+
+\title{The Positive Health Benefits of Higher Education}
+\author[Euclid]{Johnny Appletree }
+%\author{First Author\inst{1} \and Second Author\inst{2}}
+%\institute{\inst{1} Affiliation of the 1st author \and
+ %\inst{2} Affiliation of the 2nd author}
+\institute{University of California, Davis}
+\date[ISPN ’80]{27th International Symposium of Higher Education}
+
+\newcommand{\acknowledgement}{ {\setstretch{0.2} \tiny \textit{Note: This research was supported by the College Futures Foundation and conducted in partnership with the California Student Aid Commission. The authors are also grateful for ongoing support from the Stuart Foundation to the California Education Lab. The California Education Lab at the University of California, Davis and Policy Analysis for California Education are also thankful for research dissemination support from the Bill \& Melinda Gates Foundation. The findings and conclusions here are those of the authors alone and do not necessarily reflect the positions or policies of the funders or of the California Student Aid Commission.\\}}}
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{This is a frame title}
+\label{list}
+This is normal text
+
+\begin{itemize}
+	\item Item 1
+	\begin{itemize}
+	\item Item 1
+	\begin{itemize}
+	\item Item 1
+	\item Item 2
+\end{itemize}
+	\item Item 2
+\end{itemize}
+	\item Item 2
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{This is a Title}
+\framesubtitle{This is a Subtitle}
+
+\begin{theorem}[This is a theorem]
+Let  S be the set of all university students. For $ \forall s \in S$, we have $H(A|Graduate) \geq H(A | Not Graduate)$ where $H: S \rightarrow \Omega$ is an injection from the set of all students S onto the set of all health outcomes $\Omega$.
+\end{theorem}
+
+                \hyperlink{list}{\beamergotobutton{Back to list}}
+\end{frame}
+
+
+\end{document}

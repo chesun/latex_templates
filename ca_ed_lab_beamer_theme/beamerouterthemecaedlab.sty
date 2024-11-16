@@ -1,0 +1,24 @@
+\mode<presentation>
+
+% Frame title
+\defbeamertemplate*{frametitle}{caedlab}[1][]
+{
+\vskip1cm%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2cm]{frametitle} 
+  \begin{tikzpicture}
+   \useasboundingbox(0,0) rectangle(\the\paperwidth,2);
+   \ifx\insertframesubtitle\@empty%
+      {\node[anchor= west, white,font=\Large] at (0.4,2.25){\insertframetitle};}
+            { \node[anchor= west, white,font=\scriptsize] at (15.4,2.75){\insertframenumber};}%
+
+      \else%
+      {\node[anchor= west, white,font=\large] at (0.4,2.6){\insertframetitle};%
+       \node[anchor= west, white,font=\small] at (0.4,2){\insertframesubtitle};}%
+                   { \node[anchor= west, white,font=\scriptsize] at (15.4,2.75){\insertframenumber};}%
+
+      \fi
+  \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
+\mode<all>
