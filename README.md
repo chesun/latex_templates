@@ -7,3 +7,4 @@
     - ```beamerouterthemecaedlab.sty```
 - Then put the ```assets``` folder in the directory
 - Modify ```beamerinnerthemecaedlab.sty``` line 75 to reflect the correct directory to the logo.
+- Compile using XeLaTeX, or change the font theme in ```beamerthemecaedlab.sty``` to one of the default themes in order to use pdfLaTeX. 
