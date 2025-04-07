@@ -4,21 +4,25 @@
 \defbeamertemplate*{frametitle}{ucdavis}[1][]
 {
 \vskip1cm%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=2cm]{frametitle} 
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1cm]{frametitle} 
   \begin{tikzpicture}
-   \useasboundingbox(0,0) rectangle(\the\paperwidth,2);
+   \useasboundingbox(0,0) rectangle(\the\paperwidth,1);
    \ifx\insertframesubtitle\@empty%
-      {\node[anchor= west, white,font=\Large] at (0.4,2.25){\insertframetitle};}
-            { \node[anchor= west, white,font=\scriptsize] at (15.4,2.75){\insertframenumber};}%
+      {\node[anchor= west, white,font=\Large] at (0.4,1.1){\insertframetitle};}
+            { \node[anchor= west, white,font=\scriptsize] at (15.3,1.75){\insertframenumber};}%
 
       \else%
-      {\node[anchor= west, white,font=\large] at (0.4,2.6){\insertframetitle};%
-       \node[anchor= west, white,font=\small] at (0.4,2){\insertframesubtitle};}%
-                   { \node[anchor= west, white,font=\scriptsize] at (15.4,2.75){\insertframenumber};}%
+      {\node[anchor= west, white,font=\large] at (0.4,1.55){\insertframetitle};%
+       \node[anchor= west, white,font=\small] at (0.4,1){\insertframesubtitle};}%
+                   { \node[anchor= west, white,font=\scriptsize] at (15.3,1.75){\insertframenumber};}%
 
       \fi
   \end{tikzpicture}
   \end{beamercolorbox}
+    \vspace*{-1em}
+
 }
+
+
 
 \mode<all>

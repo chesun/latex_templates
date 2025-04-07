@@ -1,22 +1,138 @@
 \mode<presentation>
 
-%Author: Christina Sun
-%November 2024
-
 % Requirement
 \RequirePackage{tikz}
+\RequirePackage{fontspec}
+\RequirePackage{xcolor}          % For color definitions
+\RequirePackage{etoolbox}        % For list processing
+\RequirePackage{pgfpages}        % (Optional)
+\RequirePackage{totcount}
+\regtotcounter{section}
 
 % Settings
 \useinnertheme{ucdavis}
 \useoutertheme{ucdavis}
 \usecolortheme{ucdavis}
 %\usefonttheme{professionalfonts}
-\usefonttheme{serif}
+\usefonttheme{default}
+
+\newsavebox{\circlebox}
+\newsavebox{\textbox}
+
+\setbeamerfont{section in toc}{size=\small}
+
+\setbeamerfont{subsection in toc}{size=\footnotesize}
 
 
-
+	\setbeamertemplate{itemize item}{--}
+    \setbeamertemplate{itemize subitem}[circle]
+    \setbeamertemplate{itemize subsubitem}{--}
 
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{blocks}[rounded][shadow=false]  
+\setbeamertemplate{blocks}[rounded][shadow=false] 
+
+
+\setbeamertemplate{section in toc}{%
+  \leavevmode
+  \parbox[t]{\dimexpr\linewidth-1em\relax}{%
+    \begingroup
+      % Save the golden circle with the section number
+      \sbox{\circlebox}{%
+         \tikz[baseline=-0.5ex]{%
+           \node[shape=circle, fill=ucdavisGold, inner sep=1pt, minimum size=1.25em] 
+             {\textcolor{white}{\inserttocsectionnumber}};}%
+      }%
+      % Save the section title text (with some horizontal skip)
+      \sbox{\textbox}{%
+         \hspace{0.5em}{\usebeamerfont{section in toc}\textcolor{ucdavisBlue}{\inserttocsection}}%
+      }%
+      % Print the golden circle and section title
+      \usebox{\circlebox}%
+      \usebox{\textbox}\par
+      \vskip -1.65ex
+      % Now, indent by the width of the circle,
+      % and draw a gold rule extending to the right edge of the parbox.
+      \hspace*{\wd\circlebox}\hspace{0.5ex}%
+      \textcolor{ucdavisGold}{\rule{\dimexpr\linewidth-\wd\circlebox}{0.4pt}}%
+      \vskip 0.5ex%
+    \endgroup
+  }%
+}
+
+
+
+
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode
+  \hspace{2em}% (Indent as desired)
+  {\usebeamerfont{subsection in toc} \textcolor{ucdavisBlue}{\textbullet \hspace{0.5em}\inserttocsubsection}}%
+  \par
+}
+
+% --------------------------------------------------
+% Count the total number of sections
+%  (for the progress bar)
+% --------------------------------------------------
+\newcounter{totalsections}
+% Patch \section so that each time it is used, we increment totalsections.
+\pretocmd{\section}{\stepcounter{totalsections}}{}{}
+
+
+% --------------------------------------------------
+% Define a TikZ-based progress bar for "section x of y"
+% --------------------------------------------------
+% This progress bar is 3cm wide and 0.3cm tall.
+% It fills with ucdavisGold for the completed portion and shows the rest in progressgray.
+\newcommand{\sectionprogressbar}{%
+  \begin{tikzpicture}[baseline]
+    \def\barwidth{8} % width in cm
+    \def\barheight{0.1} % height in cm
+    % Avoid division by zero: if totalsections > 0, compute fraction, else set to 0.
+    \ifnum\value{totalsections}>0
+      \pgfmathsetmacro{\progress}{\insertframenumber/\inserttotalframenumber}
+    \else
+      \def\progress{0}
+    \fi
+    % Draw the full bar (light gray background)
+    \fill[fill=progressgray] (0,0) rectangle (\barwidth, \barheight);
+    % Draw the completed portion (gold), width = total width * progress
+    \fill[fill=ucdavisGold] (0,0) rectangle ({\barwidth * \progress}, \barheight);
+  \end{tikzpicture}%
+}
+
+% --------------------------------------------------
+% Automatic Section Title Frame
+% --------------------------------------------------
+% \AtBeginSection runs each time we enter a new \section{...}
+% We'll display the section title plus the progress bar on its own slide.
+% --------------------------------------------------
+% Automatic Section Title Slide with Progress Bar
+% --------------------------------------------------
+\AtBeginSection[]
+{%
+  {%
+    % Override the background for this group
+    \setbeamertemplate{background}{%
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
+        \fill[white] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+      \end{tikzpicture}%
+    }
+    \begin{frame}[plain]
+      \vfill
+      \centering
+      \begin{minipage}{0.6\linewidth}
+        \raggedright
+        {\usebeamerfont{section title}\color{ucdavisBlue}\insertsectionnumber.\ \insertsection\par}
+        \vspace{0.1ex}
+        \sectionprogressbar
+      \end{minipage}
+      \vfill
+    \end{frame}%
+  }%
+}
+
+
+
 
 \mode<all>

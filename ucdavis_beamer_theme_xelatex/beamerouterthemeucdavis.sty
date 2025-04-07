@@ -4,7 +4,7 @@
 \defbeamertemplate*{frametitle}{ucdavis}[1][]
 {
 \vskip1cm%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm]{frametitle} 
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1cm]{frametitle} 
   \begin{tikzpicture}
    \useasboundingbox(0,0) rectangle(\the\paperwidth,1);
    \ifx\insertframesubtitle\@empty%
@@ -19,6 +19,10 @@
       \fi
   \end{tikzpicture}
   \end{beamercolorbox}
+    \vspace*{-1em}
+
 }
+
+
 
 \mode<all>

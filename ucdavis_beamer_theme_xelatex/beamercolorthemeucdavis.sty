@@ -3,10 +3,23 @@
 % Settings
 \definecolor{ucdavisBlue}{cmyk}{1,0.56,0,0.34}
 \definecolor{ucdavisGold}{RGB}{255,191,0}
+\definecolor{progressgray}{RGB}{211,211,211} % Light gray (for uncompleted part)
+
 \setbeamercolor*{title  page header}{fg=white}
 \setbeamercolor*{author}{fg=white}
 \setbeamercolor*{date}{fg=white}
 \setbeamercolor*{institute}{fg=white}
+
+\let\oldemph\emph
+\renewcommand{\emph}[1]{\textcolor{ucdavisBlue}{\oldemph{#1}}}
+
+\let\oldtextbf\textbf
+\renewcommand{\textbf}[1]{\textcolor{ucdavisGold}{\oldtextbf{#1}}}
+
+\setbeamercolor{section in toc}{fg=ucdavisBlue}
+\setbeamercolor{subsection title}{fg=ucdavisBlue}
+
+
 
 \setbeamercolor{itemize item}{fg=ucdavisBlue}
 \setbeamercolor{itemize subitem}{fg=ucdavisBlue}
@@ -15,6 +28,7 @@
 \setbeamercolor{enumerate item}{fg=ucdavisGold}
 \setbeamercolor{enumerate subitem}{fg=ucdavisGold}
 \setbeamercolor{enumerate subsubitem}{fg=ucdavisGold}
+
 
 \setbeamercolor{button}{bg=ucdavisGold!70,fg=white}
 

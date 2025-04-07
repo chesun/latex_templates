@@ -1,24 +1,28 @@
 \mode<presentation>
 
+\newcommand{\conference}{}
+\setbeamerfont{conference}{size=\small}
+\setbeamercolor{conference}{fg=white} % Or any color you like
+
+
+
 \setbeamertemplate{background}{
   \begin{tikzpicture}
   \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-  \fill[color=ucdavisBlue] (0,2) rectangle (\the\paperwidth,\the\paperheight);
-      \fill[ucdavisGold,opacity=1] (0,1.85) rectangle(\the\paperwidth,2);
+  \fill[color=ucdavisBlue] (0,2.5) rectangle (\the\paperwidth,\the\paperheight);
+      \fill[ucdavisGold,opacity=1] (0,0) rectangle(\the\paperwidth,2.5);
 
   \ifnum\thepage>1\relax%
    \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
-      \fill[ucdavisBlue,opacity=1] (0,7.5) rectangle(\the\paperwidth,\the\paperheight);
-      \fill[ucdavisGold,opacity=1] (0,7.35) rectangle(\the\paperwidth,7.5);
+      \fill[ucdavisBlue,opacity=1] (0,7.65) rectangle(\the\paperwidth,\the\paperheight);
+      \fill[ucdavisGold,opacity=1] (0,7.55) rectangle(\the\paperwidth,7.65);
 
    \fi
   \end{tikzpicture}
 }
 
 
-	\setbeamertemplate{itemize items}{--}
-    \setbeamertemplate{itemize subitems}{--}
-    \setbeamertemplate{itemize subsubitems}{--}
+
 
 
 
@@ -47,29 +51,40 @@
     		  \usebeamerfont{institute}\insertinstitute%
           \end{centering}
     \end{beamercolorbox}
-    
-     \vskip0.75cm%
-    \begin{beamercolorbox}[wd=\paperwidth, ht=15pt, center, #1]{date}
+
+             \vskip0.3cm%
+    \begin{beamercolorbox}[wd=\paperwidth, ht=10pt, center, #1]{date}
       	  \begin{centering}
-    		  \usebeamerfont{author}\insertdate%
+    		  \usebeamerfont{date}\insertdate%
           \end{centering}
     \end{beamercolorbox}
     
+        \vskip1cm% <-- optional spacing
+        \begin{beamercolorbox}[wd=\paperwidth, ht=10pt, center, #1]{conference}
+          \begin{centering}
+            \usebeamerfont{conference}\conference%
+          \end{centering}
+        \end{beamercolorbox}
     
+
 
   \vfill
   
-  \vspace{1.25cm}
+  % \vspace{1.25cm}
     
   
-  \begin{centering}
+  % \begin{centering}
   
-          \includegraphics[width=0.3\textwidth]{../assets/expanded_logo_gold-blue.png}
+  %        % \includegraphics[width=0.3\textwidth]{../assets/expanded_logo_gold-blue.png}
 
-  \end{centering}
+  % \end{centering}
 
 
 }
+
+
+
+
 
 \mode
 <all>
