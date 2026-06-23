@@ -2,8 +2,8 @@
 
 Custom Beamer themes for UC Davis–affiliated presentations, in two brands packaged as three theme directories:
 
-- [`ucdavis_beamer_theme_xelatex/`](/ucdavis_beamer_theme_xelatex) — UC Davis theme, **XeLaTeX/LuaLaTeX** (font: Verdana via `fontspec`).
-- [`ucdavis_beamer_theme_pdflatex/`](/ucdavis_beamer_theme_pdflatex) — the same UC Davis theme, **pdfLaTeX** (no `fontspec`; default serif font). The only substantive difference from the XeLaTeX variant is the font setup.
+- [`ucdavis_beamer_theme_xelatex/`](/ucdavis_beamer_theme_xelatex) — UC Davis theme, **XeLaTeX/LuaLaTeX** (font: Helvetica Neue via `fontspec`).
+- [`ucdavis_beamer_theme_pdflatex/`](/ucdavis_beamer_theme_pdflatex) — the same UC Davis theme, **pdfLaTeX** (font: Helvetica via the `helvet` package). The only substantive difference from the XeLaTeX variant is the font setup.
 - [`ca_ed_lab_beamer_theme/`](/ca_ed_lab_beamer_theme) — California Education Lab theme, a faithful port of the official CEL PowerPoint template. **pdfLaTeX** (font: Carlito, the free Calibri-metric clone). Navy + gold brand, with a table of contents and automatic section dividers.
 
 ## Using a theme

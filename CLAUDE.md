@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Custom, unofficial LaTeX Beamer themes for UC Davis-affiliated presentations. There are two brands, packaged as three theme directories:
 
-- `ucdavis_beamer_theme_xelatex/` — UC Davis theme, **XeLaTeX/LuaLaTeX only** (uses `fontspec`, main font Verdana).
-- `ucdavis_beamer_theme_pdflatex/` — the same UC Davis theme, **pdfLaTeX-compatible** (no `fontspec`, default serif font). The *only* substantive difference from the xelatex variant is the font setup.
+- `ucdavis_beamer_theme_xelatex/` — UC Davis theme, **XeLaTeX/LuaLaTeX only** (uses `fontspec`, main font Helvetica Neue).
+- `ucdavis_beamer_theme_pdflatex/` — the same UC Davis theme, **pdfLaTeX-compatible** (no `fontspec`; uses `helvet`, the Helvetica clone, as the pdfLaTeX stand-in for Helvetica Neue). The *only* substantive difference from the xelatex variant is the font setup — the other three `.sty` files are byte-identical.
 - `ca_ed_lab_beamer_theme/` — California Education Lab theme, a faithful port of the **official CEL PowerPoint template**. **pdfLaTeX** (uses `carlito`, the free Calibri-metric clone — no `fontspec`/XeLaTeX needed). Brand colors navy `#014B84` + gold `#DFB305`. Has TOC styling and auto section dividers (but no section progress bar). Spacing is fully paper-size-derived, so the **same source renders at the native 4:3 and at 16:9** via the beamer `aspectratio` option; the dir ships both preview decks.
 
 `assets/` holds logos/wordmarks (official UC Davis brand files under `assets/ucdavis_wordmarks/`, plus `expanded_logo_gold-blue.png`, the CEL logo `cel_logo.png` used by the caedlab theme, and the legacy/unused `ca_ed_lab.png` from the old CEL theme). `resources/` holds a Beamer cheat sheet PDF.
@@ -29,15 +29,15 @@ Internal theme name: both UC Davis variants use the name `ucdavis` (so `beamerth
 - **`\emph` and `\textbf` are redefined as color commands** in the UC Davis color theme: `\emph` → blue, `\textbf` → gold. This is surprising; bold text is not black. The CA Ed Lab theme does not do this.
 - The CA Ed Lab title page expects a user-defined `\acknowledgement` macro (it defaults to the official CEL placeholder note). The CEL logo is bundled (`../assets/cel_logo.png`) and drawn automatically by the inner theme's title-slide background — no per-presentation path edit is needed, unlike the old theme.
 
-### The hard-coded-spacing problem (mostly resolved; one theme remaining)
+### The hard-coded-spacing problem (resolved)
 
-The original layouts were positioned with **absolute, hand-tuned coordinates**, which is why multi-line titles and non-16:9 aspect ratios broke them. This has been fixed for two of the three themes:
+The original layouts were positioned with **absolute, hand-tuned coordinates**, which is why multi-line titles and non-16:9 aspect ratios broke them. All three themes are now dimension-derived and robust at 16:9 and 4:3:
 
-- **`ucdavis_beamer_theme_xelatex`** — redesigned with dimension-derived spacing (bands/title via beamer templates + `\paperheight`-derived lengths; reflowing frame titles). Robust at 16:9 and 4:3.
-- **`ca_ed_lab_beamer_theme`** — newly ported, fully paper-size-derived (named lengths like `\celstrip`, `\celmargin`, `\celborderinset` as fractions of paper size). Robust at 16:9 and 4:3.
-- **`ucdavis_beamer_theme_pdflatex`** — **still the old hard-coded version** and the remaining improvement target. Its inner theme draws the blue/gold bands at fixed TikZ y-coordinates (e.g. `2.5` footer band, `7.55`/`7.65` header band) that assume `aspectratio=169` at Beamer's default paper height; the outer theme places the frame title / number at absolute coordinates; the title page stacks `beamercolorbox`es separated by hard `\vskip`s with a forced `\LARGE` title. Port the xelatex redesign down to it (only the font setup should differ).
+- **`ucdavis_beamer_theme_xelatex`** — redesigned with dimension-derived spacing (bands/title via beamer templates + `\paperheight`-derived lengths `\udmargin`/`\udaccent`/`\udtitlepad`/`\udgoldblock`; reflowing frame titles).
+- **`ucdavis_beamer_theme_pdflatex`** — the xelatex redesign ported down verbatim; only the font setup differs (`helvet` instead of `fontspec`/Helvetica Neue), so its color/inner/outer `.sty` files are byte-identical to the xelatex ones.
+- **`ca_ed_lab_beamer_theme`** — separately ported from the CEL pptx, fully paper-size-derived (named lengths like `\celstrip`, `\celmargin`, `\celborderinset` as fractions of paper size).
 
-When making layout "automatic," prefer deriving from `\paperheight`/`\paperwidth`/`\textheight` and Beamer length registers over absolute centimeters, and let boxes size to content instead of fixed `ht=`/`\vskip`.
+When changing any layout, keep it "automatic": prefer deriving from `\paperheight`/`\paperwidth`/`\textheight` and Beamer length registers over absolute centimeters, and let boxes size to content instead of fixed `ht=`/`\vskip`. **Any change to the UC Davis layout must be made in both variants** (xelatex + pdflatex) to keep them in sync — only the master's font block should differ.
 
 ## Building / previewing
 
