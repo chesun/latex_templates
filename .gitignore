@@ -1,7 +1,22 @@
-.aux
-.log
-.nav
-.out
-.gz
-.synctex
-.toc
+# LaTeX build artifacts (the committed *_theme_test.pdf previews are kept on purpose)
+*.aux
+*.log
+*.nav
+*.snm
+*.out
+*.toc
+*.vrb
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
