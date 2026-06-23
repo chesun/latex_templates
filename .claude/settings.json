@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(xelatex *)",
+      "Bash(pdflatex *)",
+      "Bash(lualatex *)",
+      "Bash(latexmk *)",
+      "Bash(TEXINPUTS=*)",
+      "Bash(pdfinfo *)",
+      "Bash(./scripts/build.sh *)",
+      "Bash(./scripts/build.sh)",
+      "Bash(scripts/build.sh *)",
+      "Bash(open *)",
+      "Bash(ls *)",
+      "Read"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/build-reminder.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/log-reminder.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
