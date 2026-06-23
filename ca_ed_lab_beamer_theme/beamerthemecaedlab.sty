@@ -1,21 +1,107 @@
 \mode<presentation>
 
-% Requirement
+% California Education Lab beamer theme — ported from the official CEL PowerPoint
+% template (Calibri/navy/gold). Uses pdfLaTeX + Carlito (the free, metric-compatible
+% Calibri clone), so it needs no system fonts or XeLaTeX. All spacing derives from
+% the paper size, so the theme works at the native 4:3 AND at 16:9 (set via the
+% beamer aspectratio option) without edits.
+
+% Requirements
 \RequirePackage{tikz}
-\RequirePackage{fontspec}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{carlito}   % Calibri-metric-compatible font (Carlito)
+\RequirePackage{xcolor}
+\RequirePackage{titlecaps} % \Titlecap for proper-cased section-divider titles
+
+% --- Brand colors (from the official CEL template) --------------------------
+\definecolor{celNavy}{HTML}{014B84}
+\definecolor{celGold}{HTML}{DFB305}
+
+% --- Layout parameters (paper-size-derived -> aspect-ratio independent) ------
+% Defined before \useinnertheme so the inner/outer themes can use them.
+\newlength{\celmargin}\setlength{\celmargin}{0.05\paperwidth}      % side padding in bands
+\newlength{\celtitlepad}\setlength{\celtitlepad}{1.5em}            % vertical padding in the header band
+\newlength{\celaccent}\setlength{\celaccent}{2pt}                  % gold accent rule under the header band
+\newlength{\celtitlerule}\setlength{\celtitlerule}{4pt}            % thicker gold divider on the title slide
+\newlength{\celstrip}\setlength{\celstrip}{0.22\paperheight}       % title-slide white logo strip height
+\newlength{\celborderinset}\setlength{\celborderinset}{0.035\paperheight} % section-divider gold border inset
 
 % Settings
 \useinnertheme{caedlab}
 \useoutertheme{caedlab}
 \usecolortheme{caedlab}
-%\usefonttheme{professionalfonts}
-\usefonttheme{serif}
-\setmainfont{Helvetica}
 
+\usefonttheme{professionalfonts}        % don't let beamer substitute fonts
+\renewcommand{\familydefault}{\sfdefault} % Carlito (sans) is the default family
 
-
+% Fonts
+\setbeamerfont{title}{size=\LARGE}
+\setbeamerfont{author}{size=\large,series=\bfseries}
+\setbeamerfont{institute}{size=\normalsize,shape=\itshape}
+\setbeamerfont{frametitle}{size=\LARGE}
+\setbeamerfont{framenumber}{size=\small}
+\setbeamerfont{section title}{size=\huge}
+\setbeamerfont{section in toc}{size=\large}
+\setbeamerfont{subsection in toc}{size=\normalsize}
 
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{blocks}[rounded][shadow=false]  
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}{\textperiodcentered}
+
+% --- Table of contents: gold numbered circles + navy titles, no rules --------
+\setbeamertemplate{section in toc}{%
+  \leavevmode
+  \tikz[baseline=-0.5ex]{\node[circle,fill=celGold,inner sep=1pt,minimum size=1.45em]%
+    {\textcolor{white}{\footnotesize\inserttocsectionnumber}};}%
+  \hspace{0.6em}{\usebeamerfont{section in toc}\textcolor{celNavy}{\inserttocsection}}%
+  \par\vskip1.2ex
+}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\hspace{2.6em}%
+  {\usebeamerfont{subsection in toc}\textcolor{celNavy!55}{\textbullet\hspace{0.5em}\inserttocsubsection}}%
+  \par\vskip0.5ex
+}
+
+% --- Capture the raw section title for proper-casing on the divider ----------
+% \insertsection expands to a \hyperlink wrapper (not plain text), which
+% titlecaps can't process. Intercept \section to stash the literal title so the
+% divider can run it through \titlecap. Handles \section, \section[short]{...},
+% and \section*{...}; the rare \section<overlay> form is not preserved.
+\let\celorig@section\section
+\RenewDocumentCommand{\section}{s o m}{%
+  \def\celcursection{#3}%
+  \IfBooleanTF{#1}%
+    {\celorig@section*{#3}}%
+    {\IfNoValueTF{#2}{\celorig@section{#3}}{\celorig@section[#2]{#3}}}%
+}
+
+% --- Section divider (ported from the CEL "Section Header" slide) ------------
+% Full navy slide with the section title centered in white. Four gold rules sit
+% inset from the edges but each spans the full slide width/height, so they cross
+% at the corners and run all the way to the borders (matches the official deck).
+\AtBeginSection[]{%
+  {%
+    \setbeamertemplate{background}{%
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
+        \fill[celNavy] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+        \draw[celGold,line width=1.2pt] (0,\celborderinset) -- (\the\paperwidth,\celborderinset);
+        \draw[celGold,line width=1.2pt] (0,\dimexpr\paperheight-\celborderinset\relax) -- (\the\paperwidth,\dimexpr\paperheight-\celborderinset\relax);
+        \draw[celGold,line width=1.2pt] (\celborderinset,0) -- (\celborderinset,\the\paperheight);
+        \draw[celGold,line width=1.2pt] (\dimexpr\paperwidth-\celborderinset\relax,0) -- (\dimexpr\paperwidth-\celborderinset\relax,\the\paperheight);
+      \end{tikzpicture}%
+    }
+    \begin{frame}[plain]
+      \vfill
+      \begin{centering}
+        {\usebeamerfont{section title}\color{white}%
+          \titlecap{\celcursection}\par}%
+      \end{centering}
+      \vfill
+    \end{frame}%
+  }%
+}
 
 \mode<all>

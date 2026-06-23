@@ -1,24 +1,29 @@
 \mode<presentation>
 
-% Settings
-\definecolor{ucdavisBlue}{cmyk}{1,0.56,0,0.34}
-\definecolor{ucdavisGold}{RGB}{255,191,0}
-\setbeamercolor*{title  page header}{fg=white}
-\setbeamercolor*{author}{fg=white}
-\setbeamercolor*{date}{fg=white}
-\setbeamercolor*{institute}{fg=white}
-\setbeamercolor*{ackowledgement}{fg=white}
+% Colors are defined in the master (celNavy, celGold).
 
+% Title-slide text sits on the navy field -> white.
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
 
-\setbeamercolor{itemize item}{fg=ucdavisBlue}
-\setbeamercolor{itemize subitem}{fg=ucdavisBlue}
-\setbeamercolor{itemize subsubitem}{fg=ucdavisBlue}
+% Body / structure
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=celNavy}
+\setbeamercolor{itemize item}{fg=celNavy}
+\setbeamercolor{itemize subitem}{fg=celGold}
+\setbeamercolor{itemize subsubitem}{fg=celNavy}
+\setbeamercolor{alerted text}{fg=celGold}
 
-\setbeamercolor{button}{bg=ucdavisGold!70,fg=white}
+% Content-slide header band + the full-width gold accent rule under it
+\setbeamercolor{frametitle}{bg=celNavy,fg=white}
+\setbeamercolor{celaccentbar}{bg=celGold}
 
-\setbeamercolor{block title}{bg=ucdavisBlue!80, fg=white, use=structure }
-\setbeamercolor{block body}{bg=ucdavisGold!80, fg=white, use=structure }
+% Blocks
+\setbeamercolor{block title}{bg=celNavy,fg=white}
+\setbeamercolor{block body}{bg=celNavy!8,fg=black}
 
-
+\setbeamercolor{button}{bg=celGold,fg=white}
 
 \mode<all>

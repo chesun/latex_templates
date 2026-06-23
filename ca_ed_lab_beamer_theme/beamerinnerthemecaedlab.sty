@@ -1,83 +1,49 @@
 \mode<presentation>
 
-\setbeamertemplate{background}{
-  \begin{tikzpicture}
-  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-  \fill[color=ucdavisBlue] (0,2) rectangle (\the\paperwidth,\the\paperheight);
-      \fill[ucdavisGold,opacity=1] (0,1.85) rectangle(\the\paperwidth,2);
+% Acknowledgement note on the title slide. Defaults to the official CEL
+% placeholder text; replace it in your document with \renewcommand.
+\newcommand{\acknowledgement}{Note: [INCLUDE ACKNOWLEDGEMENT LANGUAGE HERE] The research reported here was supported by\dots}
+\setbeamerfont{acknowledgement}{size=\scriptsize,shape=\itshape}
 
-  \ifnum\thepage>1\relax%
-   \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
-      \fill[ucdavisBlue,opacity=1] (0,7.5) rectangle(\the\paperwidth,\the\paperheight);
-      \fill[ucdavisGold,opacity=1] (0,7.35) rectangle(\the\paperwidth,7.5);
-
-   \fi
-  \end{tikzpicture}
+% --- Background -------------------------------------------------------------
+% Title slide (page 1): navy fills the top, a gold rule marks the boundary, and
+% a white strip across the bottom holds the centered CEL logo. Heights derive
+% from \paperheight, so this holds at 4:3 and 16:9. Content slides stay white.
+\setbeamertemplate{background}{%
+  \ifnum\thepage=1\relax
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
+      \fill[celNavy] (0,\celstrip) rectangle (\the\paperwidth,\the\paperheight);
+      \draw[celGold,line width=\celtitlerule] (0,\celstrip) -- (\the\paperwidth,\celstrip);
+      \node[anchor=center] at (0.5\paperwidth,0.5\celstrip)
+        {\includegraphics[height=0.66\celstrip]{../assets/cel_logo.png}};
+    \end{tikzpicture}%
+  \fi
 }
 
-
-	\setbeamertemplate{itemize items}{--}
-    \setbeamertemplate{itemize subitems}{--}
-    \setbeamertemplate{itemize subsubitems}{--}
-
-
-
-% Title page
-\defbeamertemplate*{title page}{caedlab}[1][]
-{ 
-
-   \vskip1.2cm%
-    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt, center, #1]{title page header}
-  	  \begin{centering}
-     	 	\usebeamerfont{title}\LARGE{ \inserttitle}\par%
-       	\end{centering}
-    \end{beamercolorbox}%
-    
-
-    \vskip0.5cm%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=15pt, sep=2pt, center, #1]{author}
-      	  \begin{centering}
-      		\usebeamerfont{author}\insertauthor%
-             \end{centering}
-    \end{beamercolorbox}
-    
-         \vskip0.2cm%
-    \begin{beamercolorbox}[wd=\paperwidth, ht=8pt, sep=6pt, center, #1]{institute}
-      	  \begin{centering}
-    		  \usebeamerfont{institute}\insertinstitute%
-          \end{centering}
-    \end{beamercolorbox}
-    
-     \vskip0.3cm%
-    \begin{beamercolorbox}[wd=\paperwidth, ht=10pt, center, #1]{date}
-      	  \begin{centering}
-    		  \usebeamerfont{author}\insertdate%
-          \end{centering}
-    \end{beamercolorbox}
-    
-    
-     \vskip1cm%
-    \begin{beamercolorbox}[wd=\paperwidth, ht=15pt, sep=4pt, #1]{ackowledgement}
-
-    		  \usebeamerfont{ackowledgement}\acknowledgement \par%
-    \end{beamercolorbox}
-
-    
-    
-
-  \vfill
-  
-  \vspace{0.6cm}
-    
-  
+% --- Title page -------------------------------------------------------------
+% Centered white title + bold presenter + italic affiliation on the navy field,
+% with the (centered) acknowledgement note above the white logo strip, which is
+% reserved by the trailing \vskip\celstrip. The logo is drawn by the background.
+\defbeamertemplate*{title page}{caedlab}[1][]{%
+  \vskip0.14\paperheight
   \begin{centering}
-  
-          \includegraphics[width=0.3\textwidth]{../assets/ca_ed_lab.png}
-
+    {\usebeamerfont{title}\color{white}\inserttitle\par}%
+    \vskip1.3em%
+    {\usebeamerfont{author}\color{white}\insertauthor\par}%
+    \vskip0.5em%
+    {\usebeamerfont{institute}\color{white}\insertinstitute\par}%
   \end{centering}
-
-
+  \vfill
+  \ifx\acknowledgement\@empty\else%
+    \begin{center}%
+    \begin{minipage}{\dimexpr\textwidth-2\celmargin\relax}%
+      \centering\usebeamerfont{acknowledgement}\color{white}\acknowledgement%
+    \end{minipage}%
+    \end{center}%
+  \fi%
+  \vskip0.03\paperheight
+  \vskip\celstrip
 }
 
-\mode
-<all>
+\mode<all>

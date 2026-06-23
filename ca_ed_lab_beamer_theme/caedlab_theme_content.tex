@@ -1,0 +1,90 @@
+% Shared body for the CEL theme test decks. The two wrappers
+% (caedlab_theme_test.tex = 4:3, caedlab_theme_test_169.tex = 16:9) each set the
+% \documentclass aspect ratio and then \input this file. Compile with pdfLaTeX.
+
+\usetheme{caedlab}
+
+\title{The Positive Health Benefits of Higher Education}
+\author{Johnny Appletree}
+\institute{University of California, Davis}
+% \acknowledgement defaults to the official CEL placeholder; replace it as needed:
+% \renewcommand{\acknowledgement}{Note: This research was supported by ...}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\subsection{Background}
+
+\begin{frame}{This is a frame title}
+\label{list}
+This is normal text
+
+\begin{itemize}
+	\item Item 1
+	\begin{itemize}
+	\item Item 1
+	\begin{itemize}
+	\item Item 1
+	\item Item 2
+\end{itemize}
+	\item Item 2
+\end{itemize}
+	\item Item 2
+\end{itemize}
+\end{frame}
+
+\begin{frame}{This is a Title}
+\begin{theorem}[This is a theorem]
+Let $S$ be the set of all university students. For $\forall s \in S$, we have $H(A \mid \text{Graduate}) \geq H(A \mid \text{Not Graduate})$ where $H: S \rightarrow \Omega$ is an injection from the set of all students $S$ onto the set of all health outcomes $\Omega$.
+\end{theorem}
+
+                \hyperlink{list}{\beamergotobutton{Back to list}}
+\end{frame}
+
+\section{Using this template}
+
+\begin{frame}[fragile]{Switching aspect ratio}
+This theme is \textbf{modular}: the same source renders at both aspect ratios. Only the \texttt{aspectratio} option in \verb|\documentclass| changes --- the layout adapts automatically.
+
+\begin{itemize}
+	\item \textbf{4:3} (CEL native):\\ \verb|\documentclass[aspectratio=43]{beamer}|
+	\item \textbf{16:9} (widescreen):\\ \verb|\documentclass[aspectratio=169]{beamer}|
+\end{itemize}
+
+\vspace{0.5em}
+These two preview PDFs were built from one shared body:
+\begin{itemize}
+	\item \texttt{caedlab\_theme\_test.pdf} --- 4:3
+	\item \texttt{caedlab\_theme\_test\_169.pdf} --- 16:9
+\end{itemize}
+\end{frame}
+
+% Final "Thank you" slide (ported from the official deck): partners /
+% collaborators grouped by organization (org name as a heading, members beneath),
+% with the funding note at the bottom.
+\begin{frame}[t]{Thank you!}
+\vskip0.6em
+{\large\color{celNavy}California Department of Education}\\[0.15em]
+Jonathan Isler\\
+Name\par
+\vskip1.0em
+{\large\color{celNavy}Organization}\\[0.15em]
+Name\\
+Name\par
+\vskip1.0em
+{\large\color{celNavy}Organization}\\[0.15em]
+Name\\
+Name\par
+\vfill
+{\usebeamerfont{acknowledgement}\acknowledgement\par}
+\end{frame}
+
+\end{document}

@@ -35,7 +35,10 @@ build_theme() {
 
 build_ucdavis_xe()  { build_theme "ucdavis_beamer_theme_xelatex"  "ucdavis_theme_test.tex" "-xelatex"; }
 build_ucdavis_pdf() { build_theme "ucdavis_beamer_theme_pdflatex" "ucdavis_theme_test.tex" "-pdf"; }
-build_caedlab()     { build_theme "ca_ed_lab_beamer_theme"        "caedlab_theme_test.tex" "-xelatex"; }
+build_caedlab() {  # CEL ships two decks (4:3 native + 16:9) from one shared body
+  build_theme "ca_ed_lab_beamer_theme" "caedlab_theme_test.tex"     "-pdf"
+  build_theme "ca_ed_lab_beamer_theme" "caedlab_theme_test_169.tex" "-pdf"
+}
 
 target="${1:-all}"
 case "${target}" in
