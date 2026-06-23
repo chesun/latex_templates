@@ -9,13 +9,22 @@
 \RequirePackage{totcount}
 \regtotcounter{section}
 
+% Layout parameters — derived from paper size so they hold at any aspect ratio.
+% Tune the whole theme's spacing from here (defined before \useinnertheme so the
+% inner/outer themes can use them).
+\newlength{\udmargin}\setlength{\udmargin}{0.045\paperwidth}       % side padding inside bands
+\newlength{\udaccent}\setlength{\udaccent}{2.5pt}                  % gold accent band thickness
+\newlength{\udtitlepad}\setlength{\udtitlepad}{1.35em}             % vertical padding in the header band
+\newlength{\udgoldblock}\setlength{\udgoldblock}{0.22\paperheight} % title-slide gold strip height
+
 % Settings
 \useinnertheme{ucdavis}
 \useoutertheme{ucdavis}
 \usecolortheme{ucdavis}
-%\usefonttheme{professionalfonts}
-\usefonttheme{serif}
-\setmainfont{Verdana}
+\usefonttheme{professionalfonts}
+\setmainfont{Helvetica Neue}
+\setsansfont{Helvetica Neue}
+\renewcommand{\familydefault}{\sfdefault}
 
 \newsavebox{\circlebox}
 \newsavebox{\textbox}
@@ -23,6 +32,12 @@
 \setbeamerfont{section in toc}{size=\small}
 
 \setbeamerfont{subsection in toc}{size=\footnotesize}
+
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{frametitle}{size=\LARGE,series=\bfseries}
+\setbeamerfont{framenumber}{size=\small}
+\setbeamerfont{section title}{size=\huge,series=\bfseries}
+\setbeamerfont{section eyebrow}{size=\small}
 
 
 	\setbeamertemplate{itemize item}{--}
@@ -33,41 +48,22 @@
 \setbeamertemplate{blocks}[rounded][shadow=false] 
 
 
+% Sleek TOC: a gold numbered circle + the section title, with generous spacing
+% and no rules (the full-width rules read as dated). Subsections are indented and
+% muted for hierarchy.
 \setbeamertemplate{section in toc}{%
   \leavevmode
-  \parbox[t]{\dimexpr\linewidth-1em\relax}{%
-    \begingroup
-      % Save the golden circle with the section number
-      \sbox{\circlebox}{%
-         \tikz[baseline=-0.5ex]{%
-           \node[shape=circle, fill=ucdavisGold, inner sep=1pt, minimum size=1.25em] 
-             {\textcolor{white}{\inserttocsectionnumber}};}%
-      }%
-      % Save the section title text (with some horizontal skip)
-      \sbox{\textbox}{%
-         \hspace{0.5em}{\usebeamerfont{section in toc}\textcolor{ucdavisBlue}{\inserttocsection}}%
-      }%
-      % Print the golden circle and section title
-      \usebox{\circlebox}%
-      \usebox{\textbox}\par
-      \vskip -1.65ex
-      % Now, indent by the width of the circle,
-      % and draw a gold rule extending to the right edge of the parbox.
-      \hspace*{\wd\circlebox}\hspace{0.5ex}%
-      \textcolor{ucdavisGold}{\rule{\dimexpr\linewidth-\wd\circlebox}{0.4pt}}%
-      \vskip 0.5ex%
-    \endgroup
-  }%
+  \tikz[baseline=-0.5ex]{%
+    \node[shape=circle, fill=ucdavisGold, inner sep=1pt, minimum size=1.25em]
+      {\textcolor{white}{\inserttocsectionnumber}};}%
+  \hspace{0.6em}{\usebeamerfont{section in toc}\textcolor{ucdavisBlue}{\inserttocsection}}%
+  \par\vskip1.2ex
 }
-
-
-
 
 \setbeamertemplate{subsection in toc}{%
   \leavevmode
-  \hspace{2em}% (Indent as desired)
-  {\usebeamerfont{subsection in toc} \textcolor{ucdavisBlue}{\textbullet \hspace{0.5em}\inserttocsubsection}}%
-  \par
+  \hspace{2.4em}{\usebeamerfont{subsection in toc}\textcolor{ucdavisBlue!55}{\textbullet\hspace{0.5em}\inserttocsubsection}}%
+  \par\vskip0.5ex
 }
 
 % --------------------------------------------------
@@ -112,21 +108,22 @@
 \AtBeginSection[]
 {%
   {%
-    % Override the background for this group
+    % Full-bleed Aggie-blue "chapter break": a gold "SECTION N" eyebrow above the
+    % large white section title. Minimal — no rule, no progress bar.
     \setbeamertemplate{background}{%
       \begin{tikzpicture}
         \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
-        \fill[white] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+        \fill[ucdavisBlue] (0,0) rectangle (\the\paperwidth,\the\paperheight);
       \end{tikzpicture}%
     }
     \begin{frame}[plain]
       \vfill
-      \centering
-      \begin{minipage}{0.6\linewidth}
+      \hspace*{\udmargin}%
+      \begin{minipage}{\dimexpr\paperwidth-2\udmargin\relax}
         \raggedright
-        {\usebeamerfont{section title}\color{ucdavisBlue}\insertsectionnumber.\ \insertsection\par}
-        \vspace{0.1ex}
-        \sectionprogressbar
+        {\usebeamerfont{section eyebrow}\color{ucdavisGold}SECTION~\insertsectionnumber\par}
+        \vskip0.5em
+        {\usebeamerfont{section title}\color{white}\insertsection\par}
       \end{minipage}
       \vfill
     \end{frame}%

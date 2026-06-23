@@ -2,89 +2,48 @@
 
 \newcommand{\conference}{}
 \setbeamerfont{conference}{size=\small}
-\setbeamercolor{conference}{fg=white} % Or any color you like
+\setbeamerfont{date}{size=\normalsize}
+\setbeamercolor{conference}{fg=ucdavisBlue} % sits on the gold strip
 
-
-
-\setbeamertemplate{background}{
-  \begin{tikzpicture}
-  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-  \fill[color=ucdavisBlue] (0,2.5) rectangle (\the\paperwidth,\the\paperheight);
-      \fill[ucdavisGold,opacity=1] (0,0) rectangle(\the\paperwidth,2.5);
-
-  \ifnum\thepage>1\relax%
-   \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
-      \fill[ucdavisBlue,opacity=1] (0,7.65) rectangle(\the\paperwidth,\the\paperheight);
-      \fill[ucdavisGold,opacity=1] (0,7.55) rectangle(\the\paperwidth,7.65);
-
-   \fi
-  \end{tikzpicture}
+% --- Background -------------------------------------------------------------
+% Only the title slide (page 1) gets the brand fields; content slides are white
+% and get their band from the frametitle template (outer theme). The gold strip
+% height derives from \paperheight, so it holds at any aspect ratio. The date and
+% conference are drawn here, pinned centered inside the gold strip (blue on gold)
+% — the frame body doesn't reliably reach into the strip, so positioning them in
+% the background is what keeps them correctly placed.
+\setbeamertemplate{background}{%
+  \ifnum\thepage=1\relax
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
+      \fill[ucdavisBlue] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+      \fill[ucdavisGold] (0,0) rectangle (\the\paperwidth,\udgoldblock);
+      \node[anchor=center, align=center, text=ucdavisBlue] at (0.5\paperwidth,0.5\udgoldblock){%
+        {\usebeamerfont{date}\insertdate}%
+        \ifx\conference\@empty\else\\[7pt]{\usebeamerfont{conference}\conference}\fi%
+      };
+    \end{tikzpicture}%
+  \fi
 }
 
-
-
-
-
-
-% Title page
-\defbeamertemplate*{title page}{ucdavis}[1][]
-{ 
-
-   \vskip1.5cm%
-    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt, center, #1]{title page header}
-  	  \begin{centering}
-     	 	\usebeamerfont{title}\LARGE{ \inserttitle}\par%
-       	\end{centering}
-    \end{beamercolorbox}%
-    
-
-    \vskip0.7cm%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=15pt,sep=8pt, center, #1]{author}
-      	  \begin{centering}
-      		\usebeamerfont{author}\insertauthor%
-             \end{centering}
-    \end{beamercolorbox}
-    
-         \vskip0cm%
-    \begin{beamercolorbox}[wd=\paperwidth, ht=10pt, center, #1]{institute}
-      	  \begin{centering}
-    		  \usebeamerfont{institute}\insertinstitute%
-          \end{centering}
-    \end{beamercolorbox}
-
-             \vskip0.3cm%
-    \begin{beamercolorbox}[wd=\paperwidth, ht=10pt, center, #1]{date}
-      	  \begin{centering}
-    		  \usebeamerfont{date}\insertdate%
-          \end{centering}
-    \end{beamercolorbox}
-    
-        \vskip1cm% <-- optional spacing
-        \begin{beamercolorbox}[wd=\paperwidth, ht=10pt, center, #1]{conference}
-          \begin{centering}
-            \usebeamerfont{conference}\conference%
-          \end{centering}
-        \end{beamercolorbox}
-    
-
-
+% --- Title page -------------------------------------------------------------
+% The blue field holds the title, a short gold rule, the author, and the
+% institute, centered via \vfill with generous spacing. The trailing
+% \vskip\udgoldblock reserves the gold strip so this block centers in the blue
+% field above it. Date + conference are drawn in the strip by the background.
+\defbeamertemplate*{title page}{ucdavis}[1][]{%
   \vfill
-  
-  % \vspace{1.25cm}
-    
-  
-  % \begin{centering}
-  
-  %        % \includegraphics[width=0.3\textwidth]{../assets/expanded_logo_gold-blue.png}
-
-  % \end{centering}
-
-
+  \begin{centering}
+    {\usebeamerfont{title}\color{white}\inserttitle\par}%
+    \vskip0.7em%
+    {\color{ucdavisGold}\rule{0.16\paperwidth}{2pt}\par}%
+    \vskip1.2em%
+    {\usebeamerfont{author}\color{white}\insertauthor\par}%
+    \vskip0.6em%
+    {\usebeamerfont{institute}\color{white}\insertinstitute\par}%
+  \end{centering}
+  \vfill
+  \vskip\udgoldblock
 }
 
-
-
-
-
-\mode
-<all>
+\mode<all>
