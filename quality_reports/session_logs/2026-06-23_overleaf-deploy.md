@@ -10,9 +10,16 @@ per-file "From External URL" import + manual Refresh.
 
 ## Decision
 Ship each theme as a **single bundled `.sty`** under `dist/`, hosted on GitHub,
-imported per Overleaf project by raw URL (pinned to a tag) and Refreshed to
-update. User chose to **ship CEL as `.sty` + PNG** (keep the logo pixel-faithful)
-rather than redraw it in TikZ or base64-embed it.
+imported per Overleaf project by raw URL and Refreshed to update. User chose to
+**ship CEL as `.sty` + PNG** (keep the logo pixel-faithful) rather than redraw it
+in TikZ or base64-embed it.
+
+Import ref: **`release` branch** (so Refresh pulls latest), NOT a pinned tag.
+Rationale: matches the "receives updates" goal; Overleaf never auto-pulls (a deck
+only changes when the user clicks Refresh), so a bad `release` push has a tiny,
+recoverable blast radius for a solo maintainer. Tags (`v1`, `v2`…) are kept for
+*freezing* a specific deck (swap `release` -> `v1` in that deck's URL).
+Publish workflow: commit to `main`, then `git push origin main:release`.
 
 ## What changed
 - **`scripts/bundle.sh`** (new) — inlines color/inner/outer into the master at the

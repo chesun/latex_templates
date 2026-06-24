@@ -62,7 +62,9 @@ For low-friction use on Overleaf (where there's no shared package store), each t
 - For CEL it rewrites the logo path `../assets/cel_logo.png` → bare `cel_logo.png` and copies the PNG into `dist/caedlab/` (on Overleaf both files sit at the project root).
 - Output dirs: `dist/ucdavis-xelatex/`, `dist/ucdavis-pdflatex/`, `dist/caedlab/`. (The two UC Davis bundles share the internal filename `beamerthemeucdavis.sty` but live at distinct paths/URLs.)
 
-`scripts/build.sh` runs `bundle.sh` automatically, so `dist/` regenerates with every build. **`dist/` is generated — never hand-edit it; edit the four split sources and rebuild.** Users import the `dist/` file into Overleaf via *New File → From External URL* (raw GitHub URL, pinned to a release tag) and **Refresh** to pull updates; see README "Use on Overleaf".
+`scripts/build.sh` runs `bundle.sh` automatically, so `dist/` regenerates with every build. **`dist/` is generated — never hand-edit it; edit the four split sources and rebuild.** Users import the `dist/` file into Overleaf via *New File → From External URL* and **Refresh** to pull updates; see README "Use on Overleaf".
+
+**Release workflow.** `main` is the working branch; the **`release`** branch is what Overleaf URLs point at and always holds a known-good build. Publish an update by fast-forwarding `release` to a verified commit: `git push origin main:release`. Tags (`v1`, `v2`, …) are immutable snapshots a deck can pin to instead of `release` when it must never change. Keep this in mind when committing: a commit to `main` is **not** live to imported decks until it's pushed to `release`.
 
 ## Repo automation & conventions (`.claude/`, `MEMORY.md`)
 

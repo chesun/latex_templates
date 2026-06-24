@@ -10,17 +10,19 @@ Custom Beamer themes for UC Davis–affiliated presentations, in two brands pack
 
 Each theme is also published as a **single bundled `.sty`** under [`dist/`](/dist), so you don't have to copy four files. In an Overleaf project:
 
-1. **New File → From External URL**, and paste the raw URL for your theme. Pin it to a release tag (e.g. `v1`) so in-progress commits never break a live deck:
-    - UC Davis (XeLaTeX): `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/ucdavis-xelatex/beamerthemeucdavis.sty`
-    - UC Davis (pdfLaTeX): `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/ucdavis-pdflatex/beamerthemeucdavis.sty`
-    - California Education Lab: `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/caedlab/beamerthemecaedlab.sty`
+1. **New File → From External URL**, and paste the raw URL for your theme:
+    - UC Davis (XeLaTeX): `https://raw.githubusercontent.com/chesun/latex_templates/release/dist/ucdavis-xelatex/beamerthemeucdavis.sty`
+    - UC Davis (pdfLaTeX): `https://raw.githubusercontent.com/chesun/latex_templates/release/dist/ucdavis-pdflatex/beamerthemeucdavis.sty`
+    - California Education Lab: `https://raw.githubusercontent.com/chesun/latex_templates/release/dist/caedlab/beamerthemecaedlab.sty`
 2. For the **CEL theme only**, add its logo the same way (the bundled theme expects `cel_logo.png` next to the `.sty`, i.e. at the project root):
-    - `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/caedlab/cel_logo.png`
+    - `https://raw.githubusercontent.com/chesun/latex_templates/release/dist/caedlab/cel_logo.png`
 3. In your preamble use `\usetheme{ucdavis}` (UC Davis) or `\usetheme{caedlab}` (CEL), and set the compiler in **Menu → Compiler** — XeLaTeX for the UC Davis XeLaTeX theme, pdfLaTeX for the other two.
 
-**To pull updates:** click the imported file in Overleaf and hit **Refresh** — it re-downloads the latest from the URL. Updates are opt-in and per-project; nothing changes until you Refresh.
+**To pull updates:** click the imported file in Overleaf and hit **Refresh** — it re-downloads the latest from the `release` branch. Updates are opt-in and per-project; nothing changes until you Refresh.
 
-The bundled file is generated from the four split `.sty` sources by `scripts/bundle.sh` (run automatically by `scripts/build.sh`) — edit the sources, never `dist/`.
+**To freeze a deck** (e.g. slides for a submitted paper), swap `release` in its URL for a tag such as `v1`. A tag is a permanent snapshot that never moves, so Refresh becomes a no-op for that project and the deck can't shift under you.
+
+These URLs point at the **`release` branch**, which always holds a known-good build; day-to-day commits land on `main` and don't reach `release` until published (see *Publishing an update* below). The bundled file is generated from the four split `.sty` sources by `scripts/bundle.sh` (run automatically by `scripts/build.sh`) — edit the sources, never `dist/`.
 
 ## Using a theme manually (local compiles)
 
@@ -55,6 +57,23 @@ scripts/build.sh            # all three themes (CEL builds both 4:3 and 16:9)
 scripts/build.sh ucdavis-xe # UC Davis (XeLaTeX) only
 scripts/build.sh ucdavis-pdf # UC Davis (pdfLaTeX) only
 scripts/build.sh caedlab    # California Education Lab only
+```
+
+## Publishing an update
+
+`main` is the working branch; the **`release`** branch is what Overleaf projects import. To publish a change to all decks:
+
+1. Edit the split `.sty` sources, run `scripts/build.sh` (regenerates the previews **and** `dist/`), eyeball the previews, and commit to `main`.
+2. Fast-forward `release` to that commit and push:
+
+    ```bash
+    git push origin main:release
+    ```
+
+Each deck importing from `release` picks up the change the next time it is Refreshed. To also cut a frozen snapshot that decks can pin to, tag it:
+
+```bash
+git tag -a v2 -m "v2: <what changed>" && git push origin v2
 ```
 
 ## Compiled previews

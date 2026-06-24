@@ -36,6 +36,8 @@ See `CLAUDE.md` for architecture and `.claude/rules/` for working rules.
 
 [LEARN:build] The committed `*_theme_test.pdf` files ARE the deliverable previews; regenerate and eyeball them after any `.sty` change (the `build-reminder.py` hook nudges this; matches the "recompile samples" commit history).
 
+[LEARN:build] DEPLOYMENT: each theme is also bundled to a single-file `dist/<theme>/beamertheme<name>.sty` by `scripts/bundle.sh` (auto-run by `build.sh`) for Overleaf import via *New File -> From External URL* + Refresh. `dist/` is GENERATED — never hand-edit; edit the four split sources and rebuild. CEL bundle references a bare `cel_logo.png` (path rewritten from `../assets/`) and ships the PNG alongside. Publish model: `main` = working branch; **`release` branch** = what Overleaf URLs point at (always known-good). Publish an update with `git push origin main:release`. Tags (`v1`, `v2`…) are immutable snapshots for *freezing* a specific deck (that deck's URL uses the tag instead of `release`). KEY: a commit to `main` is NOT live to imported decks until pushed to `release`.
+
 ## Project Direction
 
 [LEARN:decision] Agreed plan (2026-06): the spacing/visual work is a FRESH MODERN REDESIGN (not incremental patching) that ALSO makes spacing automatic — band positions, frame titles, and title pages derived from `\paperwidth`/`\paperheight`/content rather than hard-coded cm, so multi-line titles and non-16:9 stop breaking. Propose 2–3 design directions before implementing. Infrastructure (build script, beamer-tikz-reviewer agent, MEMORY, logging + build hooks) was set up first and is done.
