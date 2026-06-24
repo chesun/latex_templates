@@ -13,7 +13,10 @@
 #   scripts/build.sh caedlab         # California Education Lab only
 #
 # Each theme is compiled from inside its own directory because the .sty files
-# and relative asset paths (e.g. ../assets/ca_ed_lab.png) resolve relative to it.
+# and relative asset paths (e.g. ../assets/cel_logo.png) resolve relative to it.
+#
+# After building, the single-file deploy bundles under dist/ are regenerated
+# (scripts/bundle.sh) so they stay in sync with the split .sty sources.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -52,6 +55,9 @@ case "${target}" in
     exit 2
     ;;
 esac
+
+# Regenerate the single-file deploy bundles (dist/) from the split .sty sources.
+"${ROOT}/scripts/bundle.sh"
 
 if [ "${#FAILED[@]}" -gt 0 ]; then
   echo

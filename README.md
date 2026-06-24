@@ -6,18 +6,36 @@ Custom Beamer themes for UC Davis–affiliated presentations, in two brands pack
 - [`ucdavis_beamer_theme_pdflatex/`](/ucdavis_beamer_theme_pdflatex) — the same UC Davis theme, **pdfLaTeX** (font: Helvetica via the `helvet` package). The only substantive difference from the XeLaTeX variant is the font setup.
 - [`ca_ed_lab_beamer_theme/`](/ca_ed_lab_beamer_theme) — California Education Lab theme, a faithful port of the official CEL PowerPoint template. **pdfLaTeX** (font: Carlito, the free Calibri-metric clone). Navy + gold brand, with a table of contents and automatic section dividers.
 
-## Using a theme
+## Use on Overleaf (recommended)
 
-1. Copy the four `.sty` files of the theme you want into the same directory as your presentation:
+Each theme is also published as a **single bundled `.sty`** under [`dist/`](/dist), so you don't have to copy four files. In an Overleaf project:
+
+1. **New File → From External URL**, and paste the raw URL for your theme. Pin it to a release tag (e.g. `v1`) so in-progress commits never break a live deck:
+    - UC Davis (XeLaTeX): `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/ucdavis-xelatex/beamerthemeucdavis.sty`
+    - UC Davis (pdfLaTeX): `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/ucdavis-pdflatex/beamerthemeucdavis.sty`
+    - California Education Lab: `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/caedlab/beamerthemecaedlab.sty`
+2. For the **CEL theme only**, add its logo the same way (the bundled theme expects `cel_logo.png` next to the `.sty`, i.e. at the project root):
+    - `https://raw.githubusercontent.com/chesun/latex_templates/v1/dist/caedlab/cel_logo.png`
+3. In your preamble use `\usetheme{ucdavis}` (UC Davis) or `\usetheme{caedlab}` (CEL), and set the compiler in **Menu → Compiler** — XeLaTeX for the UC Davis XeLaTeX theme, pdfLaTeX for the other two.
+
+**To pull updates:** click the imported file in Overleaf and hit **Refresh** — it re-downloads the latest from the URL. Updates are opt-in and per-project; nothing changes until you Refresh.
+
+The bundled file is generated from the four split `.sty` sources by `scripts/bundle.sh` (run automatically by `scripts/build.sh`) — edit the sources, never `dist/`.
+
+## Using a theme manually (local compiles)
+
+If you compile locally instead, you can use the same single bundle from `dist/` (one file; for CEL, also drop `dist/caedlab/cel_logo.png` next to it). Or copy the four split source files:
+
+1. Copy the four `.sty` files of the theme into your presentation's directory:
     - `beamertheme<name>.sty`
     - `beamercolortheme<name>.sty`
     - `beamerinnertheme<name>.sty`
     - `beameroutertheme<name>.sty`
 
     (`<name>` is `ucdavis` for either UC Davis variant, `caedlab` for the CEL theme. The two UC Davis variants share the name `ucdavis`, so use only one at a time.)
-2. Copy the `assets/` folder into the directory too (the themes reference logos by relative path).
+2. For the split CEL theme, also copy the `assets/` folder (it references `../assets/cel_logo.png`). The UC Davis themes need no image assets. (The `dist/` bundles avoid this — the CEL bundle references a bare `cel_logo.png` instead.)
 3. Load the theme in your preamble with `\usetheme{<name>}`.
-4. Compile with the right engine: `xelatex` for the UC Davis XeLaTeX theme, `pdflatex` for the UC Davis pdfLaTeX theme and the CEL theme. Run it **twice** if your deck has a table of contents or (UC Davis) the section progress bar.
+4. Compile with the right engine: `xelatex` for the UC Davis XeLaTeX theme, `pdflatex` for the UC Davis pdfLaTeX theme and the CEL theme. Run it **twice** if your deck has a table of contents.
 
 ## California Education Lab theme
 
