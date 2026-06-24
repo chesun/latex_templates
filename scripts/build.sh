@@ -28,7 +28,7 @@ build_theme() {
   echo "==> Building ${dir}/${tex}"
   if ( cd "${ROOT}/${dir}" \
         && latexmk "${engine}" -interaction=nonstopmode -halt-on-error "${tex}" >/dev/null 2>&1 \
-        && latexmk -c "${tex}" >/dev/null 2>&1 ); then
+        && latexmk -c -e '$clean_ext="vrb";' "${tex}" >/dev/null 2>&1 ); then
     echo "    OK  -> ${dir}/${tex%.tex}.pdf"
   else
     echo "    FAILED (rerun without >/dev/null to see the log)"
